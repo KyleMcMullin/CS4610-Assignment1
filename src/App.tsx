@@ -8,7 +8,7 @@ interface Quote {
 
 function App() {
   const [searchInput, setSearchInput] = useState('');
-  const [searchResults, setSearchResults] = useState<Quote[] | null>([]);
+  const [searchResults, setSearchResults] = useState<Quote[]>([]);
   const [randomQuote, setRandomQuote] = useState<Quote | null>(null);
   const [headerDisplay, setHeaderDisplay] = useState("home-header");
   const [searchDisplay, setSearchDisplay] = useState("home-search");
@@ -21,7 +21,9 @@ function App() {
 
   async function performSearch() {
     const results = await fetch(`https://usu-quotes-mimic.vercel.app/api/search?query=${searchInput}`);
-    setSearchResults(await results.json());
+    const json = await results.json();
+
+    setSearchResults(await json.results);
   }
 
   useEffect(() => {
@@ -54,6 +56,12 @@ function App() {
         <p>{(randomQuote === null) ? "" : randomQuote.content}</p>
         <h4>-{(randomQuote !== null) ? ((randomQuote.author !== "")  ? randomQuote.author : "Unknown") : ""}</h4>
       </div>
+      {searchResults.map((quote) => (
+          <div className="found-quote">
+          <p>{quote.content}</p>
+          <h4>-{(quote.author !== "" ? quote.author : "")}</h4>
+          </div>
+      ))};      
     </div>
   )
 }

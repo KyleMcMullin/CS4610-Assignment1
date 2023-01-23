@@ -19,6 +19,10 @@
   line-height: 1.1;
   color: black;
 }
+.found-quote {
+  overflow-wrap: normal;
+  font-family: cursive;
+}
 
 #hidden {
   display: none;
