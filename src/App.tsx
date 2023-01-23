@@ -2,22 +2,23 @@ import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
 
+interface Quote {
+  content: string;
+  author: string;
+}
 
 function App() {
-  const [count, setCount] = useState(0)
   const [searchInput, setSearchInput] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const [randomQuote, setRandomQuote] = useState("");
-  const [randomAuthor, setRandomAuthor] = useState("");
+  const [randomQuote, setRandomQuote] = useState<Quote | null>(null);
+
+  async function findRandom() {
+    const result = await fetch("https://usu-quotes-mimic.vercel.app/api/random");
+    setRandomQuote(await result.json());
+  }
 
   useEffect(() => {
-    fetch("https://usu-quotes-mimic.vercel.app/api/random")
-      .then(res => res.json())
-      .then((quote) => {
-        setRandomQuote(quote.content)
-        setRandomAuthor(quote.author)
-      })
-    return () => {}
+    findRandom();
   }, []);
 
   function performSearch() {
@@ -25,7 +26,7 @@ function App() {
       .then(res => res.json())
       .then((results) => {
         setSearchResults(results.results)
-      })
+      });
   }
 
   return (
@@ -40,8 +41,8 @@ function App() {
           onChange={(e) => setSearchInput(e.target.value)} />
       </div>
       <div className="random-quote">
-        <p>{randomQuote}</p>
-        <h4>-{(randomAuthor !== "")  ? randomAuthor : "Unknown"}</h4>
+        <p>{(randomQuote === null) ? "" : randomQuote.content}</p>
+        <h4>-{(randomQuote !== null) ? ((randomQuote.author !== "")  ? randomQuote.author : "Unknown") : ""}</h4>
       </div>
     </div>
   )
