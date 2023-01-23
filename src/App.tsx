@@ -21,7 +21,11 @@ function App() {
   }, []);
 
   function performSearch() {
-    console.log('searching for', searchInput);
+    fetch(`https://usu-quotes-mimic.vercel.app/api/search?query=${searchInput}`)
+      .then(res => res.json())
+      .then((results) => {
+        setSearchResults(results.results)
+      })
   }
 
   return (
@@ -29,6 +33,7 @@ function App() {
       <h1>Quote Search</h1>
       <div className="card">
         <input
+          className = "round"
           type="search"
           placeholder="Search for a quote"
           value={searchInput}
@@ -36,7 +41,7 @@ function App() {
       </div>
       <div className="random-quote">
         <p>{randomQuote}</p>
-        <h4>-{randomAuthor}</h4>
+        <h4>-{(randomAuthor !== "")  ? randomAuthor : "Unknown"}</h4>
       </div>
     </div>
   )
