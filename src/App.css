@@ -19,9 +19,12 @@
   line-height: 1.1;
   color: black;
 }
+
 .found-quote {
   overflow-wrap: normal;
   font-family: cursive;
+  border: 1px #000 solid;
+  color: black;
 }
 
 #hidden {
