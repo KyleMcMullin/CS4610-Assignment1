@@ -27,6 +27,10 @@
   color: black;
 }
 
+.query-results {
+  padding: 65px;
+}
+
 #hidden {
   display: none;
 }

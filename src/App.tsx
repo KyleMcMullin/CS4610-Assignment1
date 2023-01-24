@@ -56,12 +56,14 @@ function App() {
         <p>{(randomQuote === null) ? "" : randomQuote.content}</p>
         <h4>-{(randomQuote !== null) ? ((randomQuote.author !== "")  ? randomQuote.author : "Unknown") : ""}</h4>
       </div>
-      {searchResults.map((quote) => (
-          <div className="found-quote">
-          <p>{quote.content}</p>
-          <h4>-{(quote.author !== "" ? quote.author : "")}</h4>
-          </div>
-      ))};      
+      <div className="query-results">
+        {searchResults.map((quote) => (
+            <div className="found-quote">
+            <p>{quote.content}</p>
+            <h4>-{(quote.author !== "" ? quote.author : "")}</h4>
+            </div>
+        ))};      
+      </div>
     </div>
   )
 }
